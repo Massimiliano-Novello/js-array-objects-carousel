@@ -57,21 +57,40 @@ itemArrey[classActive].classList.add("active");
 //MILESTONE3
 //Generare i bottoni
 topBtn.addEventListener("click", function(){
-    clearInterval(autoplay);
-    showPerv()
-    autoplay = setInterval(showPerv, 3000)
-});
+    //Togliere la classe active dalla prima immagine
+    itemArrey[classActive].classList.remove("active");
+    //Implementare active
+    
+    if(classActive === itemArrey.length - 1) {
+        classActive = 0;
+    } else {
+        classActive++;
+    }
+    
+    
+    //aggiungere la classe active a tutte le altre immagini
+    itemArrey[classActive].classList.add("active");
 
-bottomBtn.addEventListener("click", function(){
-    clearInterval(autoplay);
-    showNext()
-    autoplay = setInterval(showPerv, 3000)
 })
 
-let autoplay = setInterval(showPerv, 3000); 
+bottomBtn.addEventListener("click", function(){
+    itemArrey[classActive].classList.remove("active");
+    
+    if(classActive === 0) {
+        classActive = itemArrey.length - 1;
+    } else {
+        classActive--;
+    }
+    
+    itemArrey[classActive].classList.add("active");
+    
+    
+})
+
+let autoplay = setInterval(myCarousel, 3000); 
 const sliderParent = document.querySelector(".slide");
 
-function showPerv () {
+function myCarousel () {
     itemArrey[classActive].classList.remove("active");
     
     if(classActive === itemArrey.length - 1) {
@@ -84,18 +103,6 @@ function showPerv () {
     
 }
 
-function showNext () {
-    itemArrey[classActive].classList.remove("active");
-    
-    if(classActive === 0) {
-        classActive = itemArrey.length - 1;
-    } else {
-        classActive--;
-    }
-    
-    itemArrey[classActive].classList.add("active");
-}
-
 sliderParent.addEventListener("mouseover", stopAutoplay);
 sliderParent.addEventListener("mouseout", startAutoplay)
 
@@ -106,5 +113,5 @@ function stopAutoplay () {
 }
 
 function startAutoplay () {
-    autoplay = setInterval(showPerv, 3000)
+    autoplay = setInterval(myCarousel, 3000)
 }
